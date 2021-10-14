@@ -29,6 +29,8 @@ class PianoKey: NSObject {
         }
     }
 
+    var octave: Int = 0
+
     var color: NSColor {
         self.type == .white ? .white : .black
     }

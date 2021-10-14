@@ -13,6 +13,7 @@
 		42C7D334271860A000AF4710 /* PianoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C7D333271860A000AF4710 /* PianoView.swift */; };
 		42C7D3382718619400AF4710 /* PianoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C7D3372718619400AF4710 /* PianoKey.swift */; };
 		42C7D33B27187D3B00AF4710 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C7D33A27187D3B00AF4710 /* NSColor.swift */; };
+		42C7D33F2718D8AA00AF4710 /* AudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C7D33E2718D8AA00AF4710 /* AudioHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		42C7D333271860A000AF4710 /* PianoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PianoView.swift; sourceTree = "<group>"; };
 		42C7D3372718619400AF4710 /* PianoKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PianoKey.swift; sourceTree = "<group>"; };
 		42C7D33A27187D3B00AF4710 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
+		42C7D33E2718D8AA00AF4710 /* AudioHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			children = (
 				42C7D3242717655600AF4710 /* Info.plist */,
 				42C7D33127185F9F00AF4710 /* PianoWidget.swift */,
+				42C7D33E2718D8AA00AF4710 /* AudioHelper.swift */,
 				42C7D33927187D2C00AF4710 /* Extensions */,
 				42C7D335271860A500AF4710 /* View */,
 				42C7D33027185F9E00AF4710 /* pock_piano_widget-Bridging-Header.h */,
@@ -182,6 +185,7 @@
 			files = (
 				42C7D33B27187D3B00AF4710 /* NSColor.swift in Sources */,
 				42C7D334271860A000AF4710 /* PianoView.swift in Sources */,
+				42C7D33F2718D8AA00AF4710 /* AudioHelper.swift in Sources */,
 				42C7D33227185F9F00AF4710 /* PianoWidget.swift in Sources */,
 				42C7D3382718619400AF4710 /* PianoKey.swift in Sources */,
 			);

@@ -18,10 +18,32 @@ class PianoWidget: NSObject, PKWidget {
 
     var pianoView: PianoView!
 
+    let audioHelper = AudioHelper()
+
     override required init() {
         super.init()
 
-        self.pianoView = PianoView(numberOfWhiteKeys: 20, frame: NSRect(x: 0, y: 0, width: 200, height: 30))
+        self.pianoView = PianoView(numberOfWhiteKeys: 40, frame: NSRect(x: 0, y: 0, width: 200, height: 30))
+        self.pianoView.delegate = self
         self.view = self.pianoView
     }
+
+    func viewDidAppear() {
+        self.audioHelper.start()
+    }
+
+    func viewDidDisappear() {
+        self.audioHelper.stop()
+    }
+}
+
+extension PianoWidget: PianoViewDelegate {
+    func pianoView(didKeyDown key: PianoKey, at index: Int, type: PianoKey.KeyType) {
+        self.audioHelper.startNote(base: 40, octave: key.octave, index: index, keyType: type)
+    }
+
+    func pianoView(didKeyUp key: PianoKey, at index: Int, type: PianoKey.KeyType) {
+        self.audioHelper.stopNote(base: 40, octave: key.octave, index: index, keyType: type)
+    }
+
 }
