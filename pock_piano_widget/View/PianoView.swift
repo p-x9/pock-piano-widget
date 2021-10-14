@@ -9,6 +9,11 @@
 import Cocoa
 import SnapKit
 
+protocol PianoViewDelegate: AnyObject {
+    func pianoView(didKeyDown key: PianoKey, at index: Int, type: PianoKey.KeyType)
+    func pianoView(didKeyUp key: PianoKey, at index: Int, type: PianoKey.KeyType)
+}
+
 class PianoView: NSView {
 
     var numberOfWhiteKeys: Int
@@ -26,6 +31,8 @@ class PianoView: NSView {
 
     var whiteKeyDownIndices = Set<Int>()
     var blackKeyDownIndices = Set<Int>()
+
+    weak var delegate: PianoViewDelegate?
 
     init(numberOfWhiteKeys: Int, frame: CGRect) {
         self.numberOfWhiteKeys = numberOfWhiteKeys
@@ -112,8 +119,9 @@ class PianoView: NSView {
     }
 
     private func setupWhiteKeys() {
-        (0..<self.numberOfWhiteKeys).forEach {_ in
+        (0..<self.numberOfWhiteKeys).forEach {index in
             let key = PianoKey(type: .white)
+            key.octave = index / 7
             self.whiteKeys.append(key)
             self.layer?.addSublayer(key.layer)
         }
@@ -127,6 +135,7 @@ class PianoView: NSView {
                 return
             }
             let key = PianoKey(type: .black)
+            key.octave = index / 7
             self.blackKeys.append(key)
             self.layer?.addSublayer(key.layer)
         }
@@ -227,10 +236,30 @@ class PianoView: NSView {
 
     private func updateKeysState() {
         self.whiteKeys.enumerated().forEach {index, key in
-            key.state = self.whiteKeyDownIndices.contains(index) ? .down : .up
+            let newState: PianoKey.State = self.whiteKeyDownIndices.contains(index) ? .down : .up
+            if key.state == newState {
+                return
+            }
+            key.state = newState
+            switch newState {
+            case .up:
+                self.delegate?.pianoView(didKeyUp: key, at: index % 7, type: .white)
+            case .down:
+                self.delegate?.pianoView(didKeyDown: key, at: index % 7, type: .white)
+            }
         }
         self.blackKeys.enumerated().forEach {index, key in
-            key.state = self.blackKeyDownIndices.contains(index) ? .down : .up
+            let newState: PianoKey.State = self.blackKeyDownIndices.contains(index) ? .down : .up
+            if key.state == newState {
+                return
+            }
+            key.state = newState
+            switch newState {
+            case .up:
+                self.delegate?.pianoView(didKeyUp: key, at: index % 5, type: .black)
+            case .down:
+                self.delegate?.pianoView(didKeyDown: key, at: index % 5, type: .black)
+            }
         }
     }
 
