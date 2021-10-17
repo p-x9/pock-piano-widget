@@ -92,11 +92,14 @@ class PianoView: NSView {
         super.touchesEnded(with: event)
 
         let touches = event.touches(for: self)
-        let points = touches.map { $0.location(in: self) }
 
+        let points = touches.map { $0.location(in: self) }
+        let previousPoints = touches.map { $0.previousLocation(in: self) }
         let (whiteIndices, blackIndices) = getIndices(points: points)
-        self.whiteKeyDownIndices.subtract(whiteIndices)
-        self.blackKeyDownIndices.subtract(blackIndices)
+        let (previousWhiteIndices, previousBlackIndices) = getIndices(points: previousPoints)
+
+        self.whiteKeyDownIndices.subtract(whiteIndices.union(previousWhiteIndices))
+        self.blackKeyDownIndices.subtract(blackIndices.union(previousBlackIndices))
 
         self.updateKeysState()
     }
@@ -105,10 +108,14 @@ class PianoView: NSView {
         super.touchesCancelled(with: event)
 
         let touches = event.touches(for: self)
+
         let points = touches.map { $0.location(in: self) }
+        let previousPoints = touches.map { $0.previousLocation(in: self) }
         let (whiteIndices, blackIndices) = getIndices(points: points)
-        self.whiteKeyDownIndices.subtract(whiteIndices)
-        self.blackKeyDownIndices.subtract(blackIndices)
+        let (previousWhiteIndices, previousBlackIndices) = getIndices(points: previousPoints)
+
+        self.whiteKeyDownIndices.subtract(whiteIndices.union(previousWhiteIndices))
+        self.blackKeyDownIndices.subtract(blackIndices.union(previousBlackIndices))
 
         self.updateKeysState()
     }
