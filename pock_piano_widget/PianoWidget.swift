@@ -39,11 +39,12 @@ class PianoWidget: NSObject, PKWidget {
 
 extension PianoWidget: PianoViewDelegate {
     func pianoView(didKeyDown key: PianoKey, at index: Int, type: PianoKey.KeyType) {
-        self.audioHelper.startNote(base: 40, octave: key.octave, index: index, keyType: type)
+        //base must to be 7n-1
+        self.audioHelper.startNote(base: 49 - 1, octave: key.octave, index: index, keyType: type)
     }
 
     func pianoView(didKeyUp key: PianoKey, at index: Int, type: PianoKey.KeyType) {
-        self.audioHelper.stopNote(base: 40, octave: key.octave, index: index, keyType: type)
+        self.audioHelper.stopNote(base: 49 - 1, octave: key.octave, index: index, keyType: type)
     }
 
 }
