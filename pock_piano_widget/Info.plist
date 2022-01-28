@@ -20,6 +20,8 @@
 	<string>1</string>
 	<key>NSPrincipalClass</key>
 	<string>pock_piano_widget.PianoWidget</string>
+	<key>PKWidgetPreferenceClass</key>
+	<string>pock_piano_widget.PianoWidgetPreferencePane</string>
 	<key>PKWidgetAuthor</key>
 	<string>p_x9</string>
 </dict>
