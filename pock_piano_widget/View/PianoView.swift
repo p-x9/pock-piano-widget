@@ -126,7 +126,7 @@ class PianoView: NSView {
     }
 
     private func setupWhiteKeys() {
-        (0..<self.numberOfWhiteKeys).forEach {index in
+        (0..<self.numberOfWhiteKeys).forEach { index in
             let key = PianoKey(type: .white)
             key.octave = index / 7
             self.whiteKeys.append(key)
@@ -137,8 +137,8 @@ class PianoView: NSView {
     }
 
     private func setupBlackKeys() {
-        (0..<self.numberOfWhiteKeys).forEach {index in
-            if !self.hasBlackKeyAtRight(for: index) {
+        (0..<self.numberOfWhiteKeys).forEach { index in
+            guard self.hasBlackKeyAtRight(for: index) else {
                 return
             }
             let key = PianoKey(type: .black)
@@ -152,7 +152,7 @@ class PianoView: NSView {
 
     private func updateWhiteKeys() {
         let width = self.whiteKeyWidth
-        self.whiteKeys.enumerated().forEach {index, key in
+        self.whiteKeys.enumerated().forEach { index, key in
             key.layer.frame = CGRect(x: width * CGFloat(index), y: 0, width: width, height: self.frame.height)
         }
     }
@@ -163,8 +163,8 @@ class PianoView: NSView {
         let blackKeyHeight = self.blackKeyHeight
 
         var currentBlackKeyIndex = 0
-        (0..<self.numberOfWhiteKeys).forEach {index in
-            if !self.hasBlackKeyAtRight(for: index) {
+        (0..<self.numberOfWhiteKeys).forEach { index in
+            guard self.hasBlackKeyAtRight(for: index) else {
                 return
             }
             let key = self.blackKeys[currentBlackKeyIndex]
@@ -178,13 +178,13 @@ class PianoView: NSView {
 
     private func getKeyIndex(at point: CGPoint) -> (PianoKey.KeyType, Int)? {
         let whiteIndex = Int(point.x / self.whiteKeyWidth)
-        if !self.whiteKeys.indices.contains(whiteIndex) {
+        guard self.whiteKeys.indices.contains(whiteIndex) else {
             return nil
         }
 
         let blackIndices = (0..<5).map { $0 + whiteIndex / 7 * 5 }
         for index in blackIndices {
-            if !self.blackKeys.indices.contains(index) {
+            guard self.blackKeys.indices.contains(index) else {
                 continue
             }
             let blackKey = self.blackKeys[index]
@@ -197,29 +197,29 @@ class PianoView: NSView {
     }
 
     private func getKey(at point: CGPoint) -> PianoKey? {
-        if let typeAndIndex = getKeyIndex(at: point) {
-            switch typeAndIndex.0 {
-            case .white:
-                return self.whiteKeys[typeAndIndex.1]
-            case .black:
-                return self.blackKeys[typeAndIndex.1]
-            }
+        guard let (type, index) = getKeyIndex(at: point) else {
+            return nil
         }
-        return nil
+        switch type {
+        case .white:
+            return self.whiteKeys[index]
+        case .black:
+            return self.blackKeys[index]
+        }
     }
 
     private func getBlackKeyIndex(at point: CGPoint) -> Int? {
-        if let typeAndIndex = getKeyIndex(at: point),
-           typeAndIndex.0 == .black {
-            return typeAndIndex.1
+        if let (type, index) = getKeyIndex(at: point),
+           type == .black {
+            return index
         }
         return nil
     }
 
     private func getWhiteKeyIndex(at point: CGPoint) -> Int? {
-        if let typeAndIndex = getKeyIndex(at: point),
-           typeAndIndex.0 == .white {
-            return typeAndIndex.1
+        if let (type, index) = getKeyIndex(at: point),
+           type == .white {
+            return index
         }
         return nil
     }
@@ -228,13 +228,13 @@ class PianoView: NSView {
         var blackKeyIndices = Set<Int>()
         var whiteKeyIndices = Set<Int>()
 
-        points.forEach {point in
-            if let typeAndIndex = getKeyIndex(at: point) {
-                switch typeAndIndex.0 {
+        points.forEach { point in
+            if let (type, index) = getKeyIndex(at: point) {
+                switch type {
                 case .black:
-                    blackKeyIndices.insert(typeAndIndex.1)
+                    blackKeyIndices.insert(index)
                 case .white:
-                    whiteKeyIndices.insert(typeAndIndex.1)
+                    whiteKeyIndices.insert(index)
                 }
             }
         }
@@ -242,7 +242,7 @@ class PianoView: NSView {
     }
 
     private func updateKeysState() {
-        self.whiteKeys.enumerated().forEach {index, key in
+        self.whiteKeys.enumerated().forEach { index, key in
             let newState: PianoKey.State = self.whiteKeyDownIndices.contains(index) ? .down : .up
             if key.state == newState {
                 return
@@ -255,7 +255,7 @@ class PianoView: NSView {
                 self.delegate?.pianoView(didKeyDown: key, at: index % 7, type: .white)
             }
         }
-        self.blackKeys.enumerated().forEach {index, key in
+        self.blackKeys.enumerated().forEach { index, key in
             let newState: PianoKey.State = self.blackKeyDownIndices.contains(index) ? .down : .up
             if key.state == newState {
                 return
