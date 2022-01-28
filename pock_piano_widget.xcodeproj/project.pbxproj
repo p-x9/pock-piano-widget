@@ -97,6 +97,7 @@
 				42C7D31E2717655600AF4710 /* Frameworks */,
 				42C7D31F2717655600AF4710 /* Resources */,
 				42C7D33D2718BE5C00AF4710 /* Run SwiftLint */,
+				4249B2AA27A448BB00294D6F /* Debug Script */,
 			);
 			buildRules = (
 			);
@@ -158,6 +159,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4249B2AA27A448BB00294D6F /* Debug Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Debug Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${CONFIGURATION}\" == \"Debug\" ]; then\n  echo \"Copying ${PRODUCT_NAME}.pock to destination folder\"\n  cp -r $TARGET_BUILD_DIR/$PRODUCT_NAME.pock ~/Library/Application\\ Support/Pock/Widgets/\n  pid=`pgrep Pock`\n  if [ -n \"$pid\" ]; then\n    echo \"Relaunch Pock.app\"\n    /Applications/Pock.app/Contents/Resources/Relaunch \"$pid\"\n  fi\nfi\n";
+		};
 		42C7D33D2718BE5C00AF4710 /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
