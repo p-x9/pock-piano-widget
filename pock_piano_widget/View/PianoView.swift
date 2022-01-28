@@ -61,7 +61,7 @@ class PianoView: NSView {
     override func touchesBegan(with event: NSEvent) {
         super.touchesBegan(with: event)
 
-        let touches = event.touches(for: self)
+        let touches = event.allTouches()
         let points = touches.map { $0.location(in: self) }
         let (whiteIndices, blackIndices) = getIndices(points: points)
         self.whiteKeyDownIndices.formUnion(whiteIndices)
@@ -73,7 +73,7 @@ class PianoView: NSView {
     override func touchesMoved(with event: NSEvent) {
         super.touchesMoved(with: event)
 
-        let touches = event.touches(for: self)
+        let touches = event.allTouches()
         let points = touches.map { $0.location(in: self) }
         let (whiteIndices, blackIndices) = getIndices(points: points)
         let previousPoints = touches.map { $0.previousLocation(in: self) }
@@ -91,7 +91,7 @@ class PianoView: NSView {
     override func touchesEnded(with event: NSEvent) {
         super.touchesEnded(with: event)
 
-        let touches = event.touches(for: self)
+        let touches = event.allTouches()
 
         let points = touches.map { $0.location(in: self) }
         let previousPoints = touches.map { $0.previousLocation(in: self) }
@@ -107,7 +107,7 @@ class PianoView: NSView {
     override func touchesCancelled(with event: NSEvent) {
         super.touchesCancelled(with: event)
 
-        let touches = event.touches(for: self)
+        let touches = event.allTouches()
 
         let points = touches.map { $0.location(in: self) }
         let previousPoints = touches.map { $0.previousLocation(in: self) }
