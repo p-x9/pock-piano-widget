@@ -55,6 +55,7 @@ class PianoView: NSView {
         self.updateBlackKeys()
     }
 
+    // MARK: - Event Handlings
     override func touchesBegan(with event: NSEvent) {
         super.touchesBegan(with: event)
 
@@ -115,6 +116,7 @@ class PianoView: NSView {
         self.updateKeysState(with: event.locationInWindow)
     }
 
+    // MARK: - Set Up Methods
     private func setupKeys() {
         self.setupWhiteKeys()
         self.setupBlackKeys()
@@ -237,6 +239,7 @@ class PianoView: NSView {
         return (whiteKeyIndices, blackKeyIndices)
     }
 
+    // MARK: - Update Key State
     private func updateKeysState(with touchEvent: NSEvent) {
         let touches = touchEvent.touches(matching: .touching, in: self)
         let points = touches.map {
