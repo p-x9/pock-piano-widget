@@ -55,6 +55,7 @@ class PianoView: NSView {
         self.updateBlackKeys()
     }
 
+    // MARK: - Event Handlings
     override func touchesBegan(with event: NSEvent) {
         super.touchesBegan(with: event)
 
@@ -70,15 +71,56 @@ class PianoView: NSView {
     override func touchesEnded(with event: NSEvent) {
         super.touchesEnded(with: event)
 
+        // FIXME: handle touches only ended
+        // 'touches(matching: .touching, in:)' may contain touches  that phase is .ended
         self.updateKeysState(with: event)
     }
 
     override func touchesCancelled(with event: NSEvent) {
         super.touchesCancelled(with: event)
 
+        // FIXME: handle touches only ended
+        // 'touches(matching: .touching, in:)' may contain touches that phase is .cancelled
         self.updateKeysState(with: event)
     }
 
+    override func mouseUp(with event: NSEvent) {
+        super.mouseUp(with: event)
+
+        self.updateKeysState(with: event.locationInWindow, isDown: false)
+    }
+
+    override func mouseDown(with event: NSEvent) {
+        super.mouseDown(with: event)
+
+        self.updateKeysState(with: event.locationInWindow)
+    }
+
+    override func mouseMoved(with event: NSEvent) {
+        super.mouseMoved(with: event)
+
+        self.updateKeysState(with: event.locationInWindow)
+    }
+
+    override func mouseDragged(with event: NSEvent) {
+        super.mouseDragged(with: event)
+
+        self.updateKeysState(with: event.locationInWindow)
+    }
+
+    override func mouseExited(with event: NSEvent) {
+        super.mouseExited(with: event)
+
+        self.updateKeysState(with: event.locationInWindow, isDown: false)
+    }
+
+    override func mouseEntered(with event: NSEvent) {
+        super.mouseEntered(with: event)
+
+        self.updateKeysState(with: event.locationInWindow)
+    }
+
+    // MARK: - Set Up Methods
     private func setupKeys() {
         self.setupWhiteKeys()
         self.setupBlackKeys()
@@ -109,6 +151,7 @@ class PianoView: NSView {
         self.updateBlackKeys()
     }
 
+    // MARK: - Update Layouts Method
     private func updateWhiteKeys() {
         let width = self.whiteKeyWidth
         self.whiteKeys.enumerated().forEach { index, key in
@@ -135,6 +178,7 @@ class PianoView: NSView {
         }
     }
 
+    // MARK: - Get Key Index from point
     private func getKeyIndex(at point: CGPoint) -> (PianoKey.KeyType, Int)? {
         let whiteIndex = Int(point.x / self.whiteKeyWidth)
         guard self.whiteKeys.indices.contains(whiteIndex) else {
@@ -155,18 +199,6 @@ class PianoView: NSView {
         return (PianoKey.KeyType.white, whiteIndex)
     }
 
-    private func getKey(at point: CGPoint) -> PianoKey? {
-        guard let (type, index) = getKeyIndex(at: point) else {
-            return nil
-        }
-        switch type {
-        case .white:
-            return self.whiteKeys[index]
-        case .black:
-            return self.blackKeys[index]
-        }
-    }
-
     private func getBlackKeyIndex(at point: CGPoint) -> Int? {
         if let (type, index) = getKeyIndex(at: point),
            type == .black {
@@ -183,7 +215,7 @@ class PianoView: NSView {
         return nil
     }
 
-    private func getIndices(points: [CGPoint]) -> (white: Set<Int>, black: Set<Int>) {
+    private func getKeyIndices(at points: [CGPoint]) -> (white: Set<Int>, black: Set<Int>) {
         var blackKeyIndices = Set<Int>()
         var whiteKeyIndices = Set<Int>()
 
@@ -201,14 +233,35 @@ class PianoView: NSView {
         return (whiteKeyIndices, blackKeyIndices)
     }
 
-    private func updateKeysState(with event: NSEvent) {
-        let touches = event.touches(matching: .touching, in: self)
+    private func getKey(at point: CGPoint) -> PianoKey? {
+        guard let (type, index) = getKeyIndex(at: point) else {
+            return nil
+        }
+        switch type {
+        case .white:
+            return self.whiteKeys[index]
+        case .black:
+            return self.blackKeys[index]
+        }
+    }
+
+    // MARK: - Update Key State
+    private func updateKeysState(with touchEvent: NSEvent) {
+        let touches = touchEvent.touches(matching: .touching, in: self)
         let points = touches.map {
             $0.location(in: self)
         }
-        let (whiteKeyDownIndices, blackKeyDownIndices) = getIndices(points: points)
+        self.updateKeysState(with: points)
+    }
+
+    private func updateKeysState(with point: CGPoint, isDown: Bool = true) {
+        self.updateKeysState(with: [point], isDown: isDown)
+    }
+
+    private func updateKeysState(with points: [CGPoint], isDown: Bool = true) {
+        let (whiteKeyDownIndices, blackKeyDownIndices) = getKeyIndices(at: points)
         self.whiteKeys.enumerated().forEach { index, key in
-            let newState: PianoKey.State = whiteKeyDownIndices.contains(index) ? .down : .up
+            let newState: PianoKey.State = whiteKeyDownIndices.contains(index) && isDown ? .down : .up
             if key.state == newState {
                 return
             }
@@ -221,7 +274,7 @@ class PianoView: NSView {
             }
         }
         self.blackKeys.enumerated().forEach { index, key in
-            let newState: PianoKey.State = blackKeyDownIndices.contains(index) ? .down : .up
+            let newState: PianoKey.State = blackKeyDownIndices.contains(index) && isDown ? .down : .up
             if key.state == newState {
                 return
             }
