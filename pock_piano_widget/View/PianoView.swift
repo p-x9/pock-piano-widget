@@ -71,12 +71,16 @@ class PianoView: NSView {
     override func touchesEnded(with event: NSEvent) {
         super.touchesEnded(with: event)
 
+        // FIXME: handle touches only ended
+        // 'touches(matching: .touching, in:)' may contain touches  that phase is .ended
         self.updateKeysState(with: event)
     }
 
     override func touchesCancelled(with event: NSEvent) {
         super.touchesCancelled(with: event)
 
+        // FIXME: handle touches only ended
+        // 'touches(matching: .touching, in:)' may contain touches that phase is .cancelled
         self.updateKeysState(with: event)
     }
 
@@ -228,7 +232,7 @@ class PianoView: NSView {
         }
         return (whiteKeyIndices, blackKeyIndices)
     }
-    
+
     private func getKey(at point: CGPoint) -> PianoKey? {
         guard let (type, index) = getKeyIndex(at: point) else {
             return nil
