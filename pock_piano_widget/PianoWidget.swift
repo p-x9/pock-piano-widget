@@ -23,9 +23,13 @@ class PianoWidget: NSObject, PKWidget {
     override required init() {
         super.init()
 
-        self.pianoView = PianoView(numberOfWhiteKeys: 40, frame: NSRect(x: 0, y: 0, width: 200, height: 30))
+        self.pianoView = PianoView(numberOfWhiteKeys: Preferences[.numberOfWhiteKeys],
+                                   frame: NSRect(x: 0, y: 0, width: 200, height: 30))
         self.pianoView.delegate = self
         self.view = self.pianoView
+
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(updateUISettings),
+                                                          name: .shouldReloadUISettings, object: nil)
     }
 
     func viewDidAppear() {
@@ -35,6 +39,14 @@ class PianoWidget: NSObject, PKWidget {
     func viewDidDisappear() {
         self.audioHelper.stop()
     }
+
+    @objc
+    func updateUISettings() {
+        DispatchQueue.main.async {
+            self.pianoView.updateNumberOfKeys(numberOfWhiteKeys: Preferences[.numberOfWhiteKeys])
+        }
+    }
+
 }
 
 extension PianoWidget: PianoViewDelegate {

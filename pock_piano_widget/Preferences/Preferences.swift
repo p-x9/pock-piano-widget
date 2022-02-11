@@ -13,8 +13,8 @@ struct Preferences {
     typealias Keys = Defaults.Keys
     typealias Key = Defaults.Key
 
-    func reset() {
-
+    static func reset() {
+        Keys.numberOfWhiteKeys.reset()
     }
 
     static subscript<Value>(key: Key<Value>) -> Value {
@@ -28,7 +28,7 @@ struct Preferences {
 }
 
 extension Preferences.Keys {
-
+    static let numberOfWhiteKeys = Preferences.Key<Int>("numberOfWhiteKeys", default: 30)
 }
 
 extension Preferences.Key {
