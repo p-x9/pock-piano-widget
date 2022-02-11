@@ -29,6 +29,14 @@ class PianoView: NSView {
     var whiteKeys: [PianoKey] = []
     var blackKeys: [PianoKey] = []
 
+    var shouldShowBlackKeys = true {
+        didSet {
+            self.blackKeys.forEach {
+                $0.layer.isHidden = !shouldShowBlackKeys
+            }
+        }
+    }
+
     weak var delegate: PianoViewDelegate?
 
     init(numberOfWhiteKeys: Int, frame: CGRect) {
@@ -143,6 +151,7 @@ class PianoView: NSView {
                 return
             }
             let key = PianoKey(type: .black)
+            key.layer.isHidden = !shouldShowBlackKeys
             key.octave = index / 7
             self.blackKeys.append(key)
             self.layer?.addSublayer(key.layer)
@@ -155,6 +164,7 @@ class PianoView: NSView {
     private func updateWhiteKeys() {
         let width = self.whiteKeyWidth
         self.whiteKeys.enumerated().forEach { index, key in
+            key.octave = index / 7
             key.layer.frame = CGRect(x: width * CGFloat(index), y: 0, width: width, height: self.frame.height)
         }
     }
@@ -170,14 +180,52 @@ class PianoView: NSView {
                 return
             }
             let key = self.blackKeys[currentBlackKeyIndex]
+            key.octave = index / 7
+            // bring to front
+            key.layer.removeFromSuperlayer()
+            self.layer?.addSublayer(key.layer)
             key.layer.frame = CGRect(x: whiteKeyWidth * CGFloat(index + 1) - blackKeyWidth / 2,
                                      y: self.frame.height - blackKeyHeight,
                                      width: blackKeyWidth, height: blackKeyHeight)
-
             currentBlackKeyIndex += 1
         }
     }
 
+    func updateNumberOfKeys(numberOfWhiteKeys: Int) {
+        let numberOfBlackKeys = getNumberOfBlackKeys(numberOfWhiteKeys: numberOfWhiteKeys)
+        if self.whiteKeys.count > numberOfWhiteKeys {
+            for i in numberOfWhiteKeys ..< self.whiteKeys.count {
+                self.whiteKeys[i].layer.removeFromSuperlayer()
+            }
+            self.whiteKeys = Array(self.whiteKeys[0..<numberOfWhiteKeys])
+        } else if self.whiteKeys.count < numberOfWhiteKeys {
+            for _ in 0..<(numberOfWhiteKeys - self.whiteKeys.count) {
+                let whiteKey = PianoKey(type: .white)
+                self.layer?.addSublayer(whiteKey.layer)
+                self.whiteKeys.append(whiteKey)
+            }
+        }
+
+        if self.blackKeys.count > numberOfBlackKeys {
+            for i in numberOfBlackKeys ..< self.blackKeys.count {
+                self.blackKeys[i].layer.removeFromSuperlayer()
+            }
+            self.blackKeys = Array(self.blackKeys[0..<numberOfBlackKeys])
+        } else if self.blackKeys.count < numberOfBlackKeys {
+            for _ in 0..<(numberOfBlackKeys - self.blackKeys.count) {
+                let blackKey = PianoKey(type: .black)
+                blackKey.layer.isHidden = !shouldShowBlackKeys
+                self.layer?.addSublayer(blackKey.layer)
+                self.blackKeys.append(blackKey)
+            }
+        }
+
+        self.numberOfWhiteKeys = numberOfWhiteKeys
+        self.updateWhiteKeys()
+        self.updateBlackKeys()
+    }
+
+  
     // MARK: - Get Key Index from point
     private func getKeyIndex(at point: CGPoint) -> (PianoKey.KeyType, Int)? {
         let whiteIndex = Int(point.x / self.whiteKeyWidth)
@@ -186,7 +234,7 @@ class PianoView: NSView {
         }
 
         let blackIndices = (0..<5).map { $0 + whiteIndex / 7 * 5 }
-        for index in blackIndices {
+        for index in blackIndices where shouldShowBlackKeys {
             guard self.blackKeys.indices.contains(index) else {
                 continue
             }
@@ -231,6 +279,14 @@ class PianoView: NSView {
             }
         }
         return (whiteKeyIndices, blackKeyIndices)
+    }
+
+
+    private func getNumberOfBlackKeys(numberOfWhiteKeys: Int) -> Int {
+        var numberOfBlackKeys = numberOfWhiteKeys / 7 * 5
+        numberOfBlackKeys += (0 ..< numberOfWhiteKeys % 7).filter { hasBlackKeyAtRight(for: $0) }.count
+
+        return numberOfBlackKeys
     }
 
     private func getKey(at point: CGPoint) -> PianoKey? {

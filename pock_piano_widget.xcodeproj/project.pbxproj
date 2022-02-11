@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4249B2A527A3FF2A00294D6F /* PianoWidgetPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4249B2A327A3FF2A00294D6F /* PianoWidgetPreferencePane.swift */; };
+		4249B2A627A3FF2A00294D6F /* PianoWidgetPreferencePane.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4249B2A427A3FF2A00294D6F /* PianoWidgetPreferencePane.xib */; };
 		42C7D32C2717657600AF4710 /* PockKit in Frameworks */ = {isa = PBXBuildFile; productRef = 42C7D32B2717657600AF4710 /* PockKit */; };
 		42C7D32F2717659000AF4710 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 42C7D32E2717659000AF4710 /* SnapKit */; };
 		42C7D33227185F9F00AF4710 /* PianoWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C7D33127185F9F00AF4710 /* PianoWidget.swift */; };
@@ -14,9 +16,13 @@
 		42C7D3382718619400AF4710 /* PianoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C7D3372718619400AF4710 /* PianoKey.swift */; };
 		42C7D33B27187D3B00AF4710 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C7D33A27187D3B00AF4710 /* NSColor.swift */; };
 		42C7D33F2718D8AA00AF4710 /* AudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C7D33E2718D8AA00AF4710 /* AudioHelper.swift */; };
+		42EE7AD3271C6AE6006529D7 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EE7AD2271C6AE6006529D7 /* Preferences.swift */; };
+		42EE7AD6271C6B43006529D7 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 42EE7AD5271C6B43006529D7 /* Defaults */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4249B2A327A3FF2A00294D6F /* PianoWidgetPreferencePane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PianoWidgetPreferencePane.swift; sourceTree = "<group>"; };
+		4249B2A427A3FF2A00294D6F /* PianoWidgetPreferencePane.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PianoWidgetPreferencePane.xib; sourceTree = "<group>"; };
 		42C7D3212717655600AF4710 /* pock_piano_widget.pock */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pock_piano_widget.pock; sourceTree = BUILT_PRODUCTS_DIR; };
 		42C7D3242717655600AF4710 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42C7D33027185F9E00AF4710 /* pock_piano_widget-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "pock_piano_widget-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -25,6 +31,7 @@
 		42C7D3372718619400AF4710 /* PianoKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PianoKey.swift; sourceTree = "<group>"; };
 		42C7D33A27187D3B00AF4710 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
 		42C7D33E2718D8AA00AF4710 /* AudioHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHelper.swift; sourceTree = "<group>"; };
+		42EE7AD2271C6AE6006529D7 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42EE7AD6271C6B43006529D7 /* Defaults in Frameworks */,
 				42C7D32C2717657600AF4710 /* PockKit in Frameworks */,
 				42C7D32F2717659000AF4710 /* SnapKit in Frameworks */,
 			);
@@ -40,6 +48,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4249B2A727A3FF3E00294D6F /* PianoWidgetPreferencePane */ = {
+			isa = PBXGroup;
+			children = (
+				4249B2A327A3FF2A00294D6F /* PianoWidgetPreferencePane.swift */,
+				4249B2A427A3FF2A00294D6F /* PianoWidgetPreferencePane.xib */,
+			);
+			path = PianoWidgetPreferencePane;
+			sourceTree = "<group>";
+		};
 		42C7D3182717655600AF4710 = {
 			isa = PBXGroup;
 			children = (
@@ -62,8 +79,9 @@
 				42C7D3242717655600AF4710 /* Info.plist */,
 				42C7D33127185F9F00AF4710 /* PianoWidget.swift */,
 				42C7D33E2718D8AA00AF4710 /* AudioHelper.swift */,
-				42C7D33927187D2C00AF4710 /* Extensions */,
 				42C7D335271860A500AF4710 /* View */,
+				42C7D33927187D2C00AF4710 /* Extensions */,
+				42EE7AD1271C6ABE006529D7 /* Preferences */,
 				42C7D33027185F9E00AF4710 /* pock_piano_widget-Bridging-Header.h */,
 			);
 			path = pock_piano_widget;
@@ -84,6 +102,15 @@
 				42C7D33A27187D3B00AF4710 /* NSColor.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		42EE7AD1271C6ABE006529D7 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				42EE7AD2271C6AE6006529D7 /* Preferences.swift */,
+				4249B2A727A3FF3E00294D6F /* PianoWidgetPreferencePane */,
+			);
+			path = Preferences;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -107,6 +134,7 @@
 			packageProductDependencies = (
 				42C7D32B2717657600AF4710 /* PockKit */,
 				42C7D32E2717659000AF4710 /* SnapKit */,
+				42EE7AD5271C6B43006529D7 /* Defaults */,
 			);
 			productName = pock_piano_widget;
 			productReference = 42C7D3212717655600AF4710 /* pock_piano_widget.pock */;
@@ -138,6 +166,7 @@
 			packageReferences = (
 				42C7D32A2717657600AF4710 /* XCRemoteSwiftPackageReference "pockkit" */,
 				42C7D32D2717659000AF4710 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				42EE7AD4271C6B43006529D7 /* XCRemoteSwiftPackageReference "Defaults" */,
 			);
 			productRefGroup = 42C7D3222717655600AF4710 /* Products */;
 			projectDirPath = "";
@@ -153,6 +182,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4249B2A627A3FF2A00294D6F /* PianoWidgetPreferencePane.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +234,8 @@
 			files = (
 				42C7D33B27187D3B00AF4710 /* NSColor.swift in Sources */,
 				42C7D334271860A000AF4710 /* PianoView.swift in Sources */,
+				42EE7AD3271C6AE6006529D7 /* Preferences.swift in Sources */,
+				4249B2A527A3FF2A00294D6F /* PianoWidgetPreferencePane.swift in Sources */,
 				42C7D33F2718D8AA00AF4710 /* AudioHelper.swift in Sources */,
 				42C7D33227185F9F00AF4710 /* PianoWidget.swift in Sources */,
 				42C7D3382718619400AF4710 /* PianoKey.swift in Sources */,
@@ -411,6 +443,14 @@
 				minimumVersion = 5.0.1;
 			};
 		};
+		42EE7AD4271C6B43006529D7 /* XCRemoteSwiftPackageReference "Defaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Defaults.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -423,6 +463,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 42C7D32D2717659000AF4710 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		42EE7AD5271C6B43006529D7 /* Defaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42EE7AD4271C6B43006529D7 /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = Defaults;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
