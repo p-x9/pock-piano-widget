@@ -29,6 +29,14 @@ class PianoView: NSView {
     var whiteKeys: [PianoKey] = []
     var blackKeys: [PianoKey] = []
 
+    var shouldShowBlackKeys = true {
+        didSet {
+            self.blackKeys.forEach {
+                $0.layer.isHidden = !shouldShowBlackKeys
+            }
+        }
+    }
+
     weak var delegate: PianoViewDelegate?
 
     init(numberOfWhiteKeys: Int, frame: CGRect) {
@@ -101,6 +109,7 @@ class PianoView: NSView {
                 return
             }
             let key = PianoKey(type: .black)
+            key.layer.isHidden = !shouldShowBlackKeys
             key.octave = index / 7
             self.blackKeys.append(key)
             self.layer?.addSublayer(key.layer)
@@ -162,6 +171,7 @@ class PianoView: NSView {
         } else if self.blackKeys.count < numberOfBlackKeys {
             for _ in 0..<(numberOfBlackKeys - self.blackKeys.count) {
                 let blackKey = PianoKey(type: .black)
+                blackKey.layer.isHidden = !shouldShowBlackKeys
                 self.layer?.addSublayer(blackKey.layer)
                 self.blackKeys.append(blackKey)
             }
@@ -179,7 +189,7 @@ class PianoView: NSView {
         }
 
         let blackIndices = (0..<5).map { $0 + whiteIndex / 7 * 5 }
-        for index in blackIndices {
+        for index in blackIndices where shouldShowBlackKeys {
             guard self.blackKeys.indices.contains(index) else {
                 continue
             }

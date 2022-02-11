@@ -25,11 +25,14 @@ class PianoWidget: NSObject, PKWidget {
 
         self.pianoView = PianoView(numberOfWhiteKeys: Preferences[.numberOfWhiteKeys],
                                    frame: NSRect(x: 0, y: 0, width: 200, height: 30))
+        self.pianoView.shouldShowBlackKeys = Preferences[.shouldShowBlackKeys]
         self.pianoView.delegate = self
         self.view = self.pianoView
 
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(updateUISettings),
                                                           name: .shouldReloadUISettings, object: nil)
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(hideBlackKeys),
+                                                          name: .hideBlackKeys, object: nil)
     }
 
     func viewDidAppear() {
@@ -44,6 +47,14 @@ class PianoWidget: NSObject, PKWidget {
     func updateUISettings() {
         DispatchQueue.main.async {
             self.pianoView.updateNumberOfKeys(numberOfWhiteKeys: Preferences[.numberOfWhiteKeys])
+        }
+    }
+
+    @objc
+    func hideBlackKeys(notification: Notification) {
+        let shouldShowBlackKeys = Preferences[.shouldShowBlackKeys]
+        DispatchQueue.main.async {
+            self.pianoView.shouldShowBlackKeys = shouldShowBlackKeys
         }
     }
 

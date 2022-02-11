@@ -29,6 +29,7 @@ struct Preferences {
 
 extension Preferences.Keys {
     static let numberOfWhiteKeys = Preferences.Key<Int>("numberOfWhiteKeys", default: 30)
+    static let shouldShowBlackKeys = Preferences.Key<Bool>("shouldShowBlackKeys", default: true)
 }
 
 extension Preferences.Key {
@@ -39,4 +40,5 @@ extension Preferences.Key {
 
 extension NSNotification.Name {
     static let shouldReloadUISettings = NSNotification.Name("shouldReloadUISettings")
+    static let hideBlackKeys = NSNotification.Name("hideBlackKeys")
 }

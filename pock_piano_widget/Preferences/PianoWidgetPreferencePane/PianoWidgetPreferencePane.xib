@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="PianoWidgetPreferencePane" customModule="pock_piano_widget" customModuleProvider="target">
             <connections>
                 <outlet property="numberOfWhiteKeyTextField" destination="hyf-Jx-pwQ" id="GyW-vd-hEH"/>
+                <outlet property="shouldShowBlackKeysCheckBox" destination="RSh-1Y-VgS" id="a1X-KC-xDA"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -22,10 +23,10 @@
                     <rect key="frame" x="16" y="16" width="448" height="240"/>
                     <subviews>
                         <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DEx-tR-Bat">
-                            <rect key="frame" x="0.0" y="0.0" width="448" height="240"/>
+                            <rect key="frame" x="0.0" y="219" width="448" height="21"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="j3t-33-nQr">
-                                    <rect key="frame" x="-2" y="224" width="344" height="16"/>
+                                    <rect key="frame" x="-2" y="5" width="344" height="16"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Number Of White Keys" id="dub-VZ-bOx">
                                         <font key="font" usesAppearanceFont="YES"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -33,7 +34,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hyf-Jx-pwQ">
-                                    <rect key="frame" x="348" y="219" width="100" height="21"/>
+                                    <rect key="frame" x="348" y="0.0" width="100" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="100" id="ZPb-Mf-a02"/>
                                     </constraints>
@@ -56,14 +57,38 @@
                                 <real value="3.4028234663852886e+38"/>
                             </customSpacing>
                         </stackView>
+                        <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h3f-zc-nI0">
+                            <rect key="frame" x="0.0" y="0.0" width="448" height="211"/>
+                            <subviews>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RSh-1Y-VgS">
+                                    <rect key="frame" x="-2" y="194" width="450" height="18"/>
+                                    <buttonCell key="cell" type="check" title="Should Show Black Keys" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ITc-BC-NYW">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="handleShouldShowBlackKeysCheckBox:" target="-2" id="k5T-v2-KBz"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <visibilityPriorities>
+                                <integer value="1000"/>
+                            </visibilityPriorities>
+                            <customSpacing>
+                                <real value="3.4028234663852886e+38"/>
+                            </customSpacing>
+                        </stackView>
                     </subviews>
                     <constraints>
                         <constraint firstItem="DEx-tR-Bat" firstAttribute="width" secondItem="bCr-wm-ejr" secondAttribute="width" id="75F-fS-Jen"/>
+                        <constraint firstItem="h3f-zc-nI0" firstAttribute="width" secondItem="bCr-wm-ejr" secondAttribute="width" id="bqV-vc-qZp"/>
                     </constraints>
                     <visibilityPriorities>
                         <integer value="1000"/>
+                        <integer value="1000"/>
                     </visibilityPriorities>
                     <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
