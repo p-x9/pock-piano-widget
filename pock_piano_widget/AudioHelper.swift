@@ -40,7 +40,7 @@ class AudioHelper {
     func startNote(base: Int, octave: Int, index: Int, keyType: PianoKey.KeyType) {
         let keyNumber = getKeyNumber(index: index, keyType: keyType)
 
-        self.audioUnitSampler.startNote(UInt8(base + octave * 12 + keyNumber), withVelocity: 64, onChannel: 0)
+        self.audioUnitSampler.startNote(UInt8(base + octave * 12 + keyNumber), withVelocity: 127, onChannel: 0)
     }
 
     func stopNote(base: Int, octave: Int, index: Int, keyType: PianoKey.KeyType) {

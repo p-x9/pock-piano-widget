@@ -17,6 +17,11 @@ class PianoWidgetPreferencePane: NSViewController, PKWidgetPreference {
             numberOfWhiteKeyTextField.stringValue = "\(Preferences[.numberOfWhiteKeys])"
         }
     }
+    @IBOutlet private weak var baseNoteTextField: NSTextField! {
+        didSet {
+            baseNoteTextField.integerValue = Preferences[.baseNote]
+        }
+    }
     @IBOutlet private weak var shouldShowBlackKeysCheckBox: NSButton! {
         didSet {
             shouldShowBlackKeysCheckBox.state = Preferences[.shouldShowBlackKeys] ? .on : .off
@@ -37,6 +42,14 @@ class PianoWidgetPreferencePane: NSViewController, PKWidgetPreference {
         Preferences[.numberOfWhiteKeys] = value
 
         NSWorkspace.shared.notificationCenter.post(name: .shouldReloadUISettings, object: nil)
+    }
+    @IBAction func handleBaseNoteTextField(_ sender: NSTextField) {
+        guard let value = Int(sender.stringValue),
+              (2...10).contains(value) else {
+            sender.stringValue = "\(Preferences[.numberOfWhiteKeys])"
+            return
+        }
+        Preferences[.baseNote] = value
     }
     @IBAction private func handleShouldShowBlackKeysCheckBox(_ sender: NSButton) {
         let value = sender.state == .on

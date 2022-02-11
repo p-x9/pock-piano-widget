@@ -30,6 +30,7 @@ struct Preferences {
 extension Preferences.Keys {
     static let numberOfWhiteKeys = Preferences.Key<Int>("numberOfWhiteKeys", default: 30)
     static let shouldShowBlackKeys = Preferences.Key<Bool>("shouldShowBlackKeys", default: true)
+    static let baseNote = Preferences.Key<Int>("baseNote", default: 3)
 }
 
 extension Preferences.Key {
