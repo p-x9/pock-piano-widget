@@ -12,7 +12,7 @@ It makes the Touch Bar on your MacBook a piano.
 <img width="1085" alt="Touch Barショット 2021-10-15 8 38 00" src="https://user-images.githubusercontent.com/50244599/137409619-e0f4e42c-a563-45ba-bc4d-c1a159f1a868.png">
 
 ## Demo
-https://user-images.githubusercontent.com/50244599/137411614-bf6e3ca9-c077-43ad-b69e-ee957a877a23.mov
+![demo](https://user-images.githubusercontent.com/50244599/153703007-7ccbe703-5c34-4327-91cb-935093120add.gif)
 
 
 
